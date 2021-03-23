@@ -1,6 +1,8 @@
 import { strictEqual } from 'assert';
 import Program from '../program.js';
 
+// TODO: Add tests for Programs class
+
 describe('Main test', function() {
   describe('Mocha works !', function() {
     it('One is one', function() {
