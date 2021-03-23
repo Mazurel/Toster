@@ -6,12 +6,49 @@
 
 import { readFile } from "fs"
 import { join } from "path"
+import Program from "./program.js"
+import EventEmmiter from "events"
+import { dirname } from "path";
+
+import express from 'express'
+
+const __filename = import.meta.url.slice(7);
+const __dirname = dirname(__filename);
 
 // TODO: startPrograms should return object that contains 
 //       all programs names and emit events when there is any info
 //       so it needs to inherit EventEmmiter as well I guess
 
-export default function startPrograms() {
+class Programs extends EventEmmiter {
+    constructor(programsList) {
+        super();
+        this.programsList = programsList; 
+
+        for (const program of programsList) {
+            program.on("data", (r) => {
+                if (r !== undefined && r.type === "info") {
+                    console.log("Transmitted info: ", t);
+                }
+            });
+        }
+    }   
+
+    findByName(name) {
+        const searchResult = this.programsList.filter((v) => { return v.getName() === name });
+        if (searchResult.length > 1) {
+            console.error("There are more than one programs with name: ", name);
+            return null;
+        }
+
+        if (searchResult.length === 0) {
+            return null;
+        }
+
+        return searchResult[0]; 
+    }
+};
+
+export default function startPrograms(app) {
     return new Promise((resolve, reject) => {
         readFile(join(__dirname, "programs/index.json"), (err, data) => {
             if (err) {
@@ -19,6 +56,8 @@ export default function startPrograms() {
                 console.error(err);
                 reject();
             }
+
+            let programsList = [];
 
             const str = Buffer.from(data);
             try {
@@ -29,8 +68,6 @@ export default function startPrograms() {
                                           [ join(__dirname, "programs", individualProgram.Path) ]); 
                     
                     p.run();
-                    // TODO: Add logic for reading "info" message and broadcast it to all clients 
-                  
                     // Run static routers with data associated with program
                     const staticProgramData = express.static(join(__dirname, "programs", individualProgram.Static), {
                         extensions: [ "html", "js", "css" ]
@@ -41,8 +78,8 @@ export default function startPrograms() {
                     programsList.push(p);
                 }
 
-                const programsNames = programsData.map((v) => v.Name);
-                resolve(programsNames); 
+                const programsContainer = new Programs(programsList);
+                resolve(programsContainer); 
             }
             catch (err) {
                 console.error("Invalid file format, no programs were loaded");

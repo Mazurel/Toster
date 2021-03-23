@@ -2,7 +2,7 @@
 
 import { readFile } from "fs"
 import path from "path"
-import { join } from "path"
+import { join, dirname } from "path"
 import pws from "ws"
 const { Server } = pws;
 
@@ -10,11 +10,14 @@ import express from 'express'
 const app = express()
 
 import Program from "./program.js"
+import loadPrograms from "./programs.js"
 
 const programsList = [];
 
+const __filename = import.meta.url.slice(7);
+const __dirname = dirname(__filename);
+
 const PORT = 3000;
-const __dirname = path.resolve();
 
 const staticApp = express.static("public", {
     extensions: [ "html", "js", "css" ]
@@ -27,41 +30,8 @@ app.get("/", (req, res, next) => {
     res.sendFile(join(__dirname, "public/index.html"))
 });
 
-// Load programs from programs/index.json
-readFile(join(__dirname, "programs/index.json"), (err, data) => {
-    if (err) {
-        console.error("No programs were provided to the server:");
-        console.error(err);
-        return;
-    }
-
-    const str = Buffer.from(data);
-    try {
-        const programsData = JSON.parse(str);
-        for (const individualProgram of programsData) {
-            const p = new Program(individualProgram.Name, 
-                                  individualProgram.Program, 
-                                  [ join(__dirname, "programs", individualProgram.Path) ]); 
-            
-            p.run();
-            // TODO: Add logic for reading "info" message and broadcast it to all clients 
-          
-            // Run static routers with data associated with program
-            const staticProgramData = express.static(join(__dirname, "programs", individualProgram.Static), {
-                extensions: [ "html", "js", "css" ]
-            });
-
-            app.use("/" + individualProgram.Name.replace(" ", "%20") , staticProgramData);
-
-            programsList.push(p);
-        }
-    }
-    catch (err) {
-        console.error("Invalid file format, no programs were loaded");
-        console.error(err);
-        return;
-    }
-});
+let programs = null;
+loadPrograms(app).then((p) => { programs = p; }); 
 
 // Start websocket server
 const wsServer = new Server({
@@ -76,13 +46,18 @@ wsServer.on("connection", (currentSocket) => {
     currentSocket.on("message", (msg) => {
         msg = JSON.parse(msg);
         const pName = msg.program;
-        const p = programsList.filter((v) => { return v.getName() === pName; });
-        if (p.length === 1) {
-            const prog = p[0];
-            prog.once("data", (d) => {
-                console.log(d);
-                prog.clearData();
-                currentSocket.send(JSON.stringify(d));
+        const prog = programs.findByName(pName);
+        if (prog !== null) {
+            const myId = msg.id;
+
+            // Send response back only if id is valid and 
+            // remove listener afterwards
+            prog.on("data", function sendResponse(d) {
+                if (d.id === myId) {
+                    prog.clearData();
+                    currentSocket.send(JSON.stringify(d));
+                    prog.removeListener("data", sendResponse);
+                }
             });        
             prog.send(msg);
         }
