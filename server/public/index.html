@@ -8,7 +8,6 @@
     <script type="text/javascript" src="public/loader.js"></script>
   </head>
   <body>
-    <h1>Chat</h1>
     <div>
       <h2> Communiaction tester </h2>
       <input id="programNameId" placeholder="Program name">
@@ -17,8 +16,7 @@
           onclick="const pN = document.getElementById('programNameId').value; sendRequest(pN, JSON.parse(document.getElementById('requestId').value)).then((v)=>{ console.log(v) })" >
           Send</button>
     </div>
-    <div id="messages">
-    </div>
+    </br>
     <div id="programsContainer"></div>
   </body>
 </html>

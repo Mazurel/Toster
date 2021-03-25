@@ -42,8 +42,6 @@ export default class Program extends EventEmmiter {
                 const parsedResult = JSON.parse(str);
                 this._data = null;
                 this.emit("data", parsedResult);
-                // Clear current this._data and end function 
-                this.processReference.stdout.clearData();
                 return;
             }
             catch {
@@ -54,6 +52,18 @@ export default class Program extends EventEmmiter {
                     //this.emit("data", { success: false });
                 }, 100);
             };
+        });
+
+        this.processReference.stderr.on("data", (chunk) => {
+            console.log(chunk.toString('utf8'));
+        });
+
+        this.processReference.on("close", (code) => {
+            console.warn(`${this.formalName} exitted with error code ${code}`);
+        });
+
+        this.processReference.on("error", (err) => {
+            console.error(`${this.formalName} throwed error: ${err}`);
         });
     }
 

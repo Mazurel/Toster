@@ -25,9 +25,10 @@ class Programs extends EventEmmiter {
         this.programsList = programsList; 
 
         for (const program of programsList) {
+            console.log(program.getName());
             program.on("data", (r) => {
                 if (r !== undefined && r.type === "info") {
-                    console.log("Transmitted info: ", t);
+                    this.emit("info", r);
                 }
             });
         }
@@ -45,6 +46,10 @@ class Programs extends EventEmmiter {
         }
 
         return searchResult[0]; 
+    }
+
+    getAllNames() {
+        return this.programsList.map((p) => p.getName());
     }
 };
 

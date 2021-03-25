@@ -11,8 +11,15 @@
 #       This would potentially allow this to use another repl.
 
 import json
+from time import sleep
+import sys
 
 while True:
+    response = { "type": "info", "msg": { "hello": "world" } }
+    print(json.dumps(response))
+    sys.stdout.flush()
+    sleep(1);
+    continue
     text_input = input() 
     str_input = json.loads(text_input, strict=False)["code"] 
     __repl_result = None

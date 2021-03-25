@@ -58,10 +58,22 @@ const sendRequest = (program, message) => {
     });
 }
 
+const registerInfoHandler = (fn) => {
+    _ws.onmessage = (msg) => {
+        try {
+            const message = JSON.parse(msg.data);
+            fn(message);
+            _pushLog(message);
+        }   
+        catch(err) {
+            console.error(err);
+        }
+    }
+};
+
 //
 // Private functions and variables
 //
-
 
 const _ws = new WebSocket('ws://localhost:8000');
 const _communicationTimeout = 1000;

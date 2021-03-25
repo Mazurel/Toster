@@ -63,9 +63,16 @@ wsServer.on("connection", (currentSocket) => {
         }
     });
 
+    const infoHandler = (info) => {
+        currentSocket.send(JSON.stringify(info));
+    };
+
+    programs.on("info", infoHandler);
+
     currentSocket.on("close", () => {
         // Removes closed socket
         socketsList = socketsList.filter((s) => { return s !== currentSocket });
+        programs.removeListener("info", infoHandler);
     });
 });
 
@@ -78,7 +85,7 @@ app.get("/api/id", (req, res , next) => {
 });
 
 app.get("/api/programs", (req, res) => {
-    res.json([ "Python%20repl" ]);
+    res.json(programs.getAllNames());
 });
 
 app.listen(PORT, () => {

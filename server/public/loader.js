@@ -21,35 +21,15 @@ window.onload = () => {
     loadPrograms().then((programs) => {
         const pc = document.getElementById("programsContainer");
 
-        // TODO: Consider if iframe is not better
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "text/html";
-
-        xhr.onload = () => {
-            const el = document.createElement("div");
-            el.innerHTML = xhr.response;
-            pc.appendChild(el);
-
-            if (programs.length > 0) {
-                xhr.open("GET", programs.shift() + "/" + "index.html");
-                xhr.send();
-            }
-        };
-
-        xhr.onerror = (e) => {
-            console.error(e);
-
-            if (programs.length > 0) {
-                xhr.open("GET", programs.shift() + "/" + "index.html");
-                xhr.send();
-            }
+        for (const program of programs) {
+            const frame = document.createElement("iframe");
+            frame.setAttribute("src", program + "/index.html");
+            frame.setAttribute("width", "640");
+            frame.setAttribute("height", "500");
+            pc.appendChild(frame);
         }
-        
-        xhr.open("GET", programs.shift() + "/" + "index.html");
-        xhr.send();
     });
 }
-
 
 
 
