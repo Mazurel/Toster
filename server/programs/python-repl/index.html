@@ -1,5 +1,19 @@
-<!-- This is not a proper html format, as it shouldn't contain html tag -->
-<div>
-    <h1> Python live repl </h1>
-    <textarea rows="8" cols="30"></textarea>
-</div> 
+<html>
+    <head>
+        <script type="text/javascript" src="/public/communicate.js"></script>
+        <script type="text/javascript">
+            window.onload = () => {
+                return;
+                registerInfoHandler((i) => {
+                    console.log(i);
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <div>
+            <h1> Python live repl </h1>
+            <textarea id="plr" rows="8" cols="30"></textarea>
+        </div>
+    </body>
+</html>

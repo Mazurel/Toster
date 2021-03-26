@@ -6,9 +6,16 @@
         "Static" : "echo/"
     },
     {
+        "Enable": false,
         "Name": "Python repl",
         "Program": "python",
         "Path": "python-repl/repl.py",
         "Static" : "python-repl/"
+    },
+    {
+        "Name": "PyApi tester",
+        "Program": "python",
+        "Path": "api-tester/tester.py",
+        "Static" : "api-tester/"
     }
 ]

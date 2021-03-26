@@ -28,6 +28,7 @@ class Programs extends EventEmmiter {
             console.log(program.getName());
             program.on("data", (r) => {
                 if (r !== undefined && r.type === "info") {
+                    r.program = program.getName();
                     this.emit("info", r);
                 }
             });
@@ -68,6 +69,8 @@ export default function startPrograms(app) {
             try {
                 const programsData = JSON.parse(str);
                 for (const individualProgram of programsData) {
+                    if (individualProgram.Enable === false) continue;
+
                     const p = new Program(individualProgram.Name, 
                                           individualProgram.Program, 
                                           [ join(__dirname, "programs", individualProgram.Path) ]); 

@@ -18,7 +18,7 @@ while True:
     response = { "type": "info", "msg": { "hello": "world" } }
     print(json.dumps(response))
     sys.stdout.flush()
-    sleep(1);
+    sleep(10)
     continue
     text_input = input() 
     str_input = json.loads(text_input, strict=False)["code"] 

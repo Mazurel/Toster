@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <script type="text/javascript" src="/public/communicate.js"></script>
+        <script type="text/javascript">
+            const sendRandomRequest = () => {
+                const responseElement = document.getElementById("rResponser");
+                sendRequest("PyApi tester" , { "Secret number is": Math.random() } ).then((r) => {
+                    responseElement.innerText = JSON.stringify(r);
+                });
+            };
+
+            registerInfoHandler((i) => {
+                const logsElement = document.getElementById("iLogs");
+                logsElement.innerText = JSON.stringify(i);
+                console.log(i);
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <h1> Api Tester </h1>
+            <button id="rSender" onclick="sendRandomRequest()">Send random request</button>
+            <h2>Latest response:</h2>
+            <div id="rResponser"></div>
+            <h2>Latest info:</h2>
+            <div id="iLogs"></div>
+        </div>
+    </body>
+</html>
