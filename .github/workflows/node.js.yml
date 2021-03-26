@@ -11,14 +11,14 @@ on:
     paths:
     - 'server/**'
     branches: [ main, devel ]
-
+    
+defaults:
+  run:
+    working-directory: ./server
+  
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    env:
-      working-directory: ./server
 
     strategy:
       matrix:
