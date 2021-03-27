@@ -63,7 +63,7 @@ export default class Program extends EventEmmiter {
         this.processReference.on("close", (code) => {
             console.warn(`${this.formalName} exitted with error code ${code}`);
             // Restart app after it crashes without blocking event loop
-            setImmediate(this.run);
+            // setImmediate(this.run);
         });
 
         this.processReference.on("error", (err) => {
