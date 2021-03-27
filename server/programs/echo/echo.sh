@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 #
 # ROBOT TOSTER - MIT 2021
 #

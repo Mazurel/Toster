@@ -1,4 +1,9 @@
-#!/usr/bin/env node
+// ROBOT TOSTER - MIT 2021
+//
+// -----
+//
+// This is main source code of the server
+//
 
 import { readFile } from "fs"
 import path from "path"

@@ -41,4 +41,26 @@ node index.js
 
 ## Adding custom program
 
-**TODO**
+Programs are loaded by the server (currently on startup) based on a `programs/index.json` file. 
+An JSON object that is in that file is an array of objects that define every program that is avaible to launch.
+An object that represent program looks currently like that:
+
+```json
+{
+    "Name": "Your program",
+    "Program": "python or something else",
+    "Path": "your-program/test.py",
+    "Static" : "your-program/static",
+    "Enable" : true
+}
+```
+
+Field explanation:
+
+Name - A formal name for you program, must Unique.
+Program - A Program that executes you script like `python` or `sh`.
+Path - A path to script that will be executed by the `Program` field.
+Static - A path to folder with static html content that will be served for the program. The folder should contain index.html file.
+Enable - This field is optional, it resolves to `true` by default.
+
+*After adding custom program, remember to restart server !*

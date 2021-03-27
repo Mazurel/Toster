@@ -6,12 +6,13 @@ Message is an [json](https://en.wikipedia.org/wiki/JSON) object that is send bet
 ## Overview of how transmitted message looks in general
 ```javascript
 {
-	// Always required
+	// Always required:
 	"type": "request or response or info", 
+    // Always required:
 	"program": "program name",
-	// Not always required
-	"id": 234, // Currently timestamp
-	// Alway required
+	// Not always required (not required in info):
+	"id": 234, // Can be acquired from RESTful API
+	// Always required:
 	"msg": { // This needs to be an object
 		"Field1" : 123,
 		"Field2" : "Some info"

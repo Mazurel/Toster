@@ -15,17 +15,13 @@ import express from 'express'
 const __filename = import.meta.url.slice(7);
 const __dirname = dirname(__filename);
 
-// TODO: startPrograms should return object that contains 
-//       all programs names and emit events when there is any info
-//       so it needs to inherit EventEmmiter as well I guess
-
 class Programs extends EventEmmiter {
     constructor(programsList) {
         super();
         this.programsList = programsList; 
 
         for (const program of programsList) {
-            console.log(program.getName());
+            // Setup info event
             program.on("data", (r) => {
                 if (r !== undefined && r.type === "info") {
                     r.program = program.getName();
@@ -97,6 +93,3 @@ export default function startPrograms(app) {
         });
     });
 }
-
-
-

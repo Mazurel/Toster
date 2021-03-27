@@ -6,7 +6,7 @@
         "Static" : "echo/"
     },
     {
-        "Enable": false,
+        "Enable": true,
         "Name": "Python repl",
         "Program": "python",
         "Path": "python-repl/repl.py",

@@ -30,7 +30,8 @@ export default class Program extends EventEmmiter {
                 this._data = chunk;
             }
             else {
-                // If it is not a buffer convert it to buffer
+                // Checks chunk data because theoretically this could be
+                // string output instead of buffer 
                 if (typeof chunk === "string") 
                     this._data = Buffer.concat([ this._data, Buffer.from(chunk)]);
                 else 
@@ -45,11 +46,12 @@ export default class Program extends EventEmmiter {
                 return;
             }
             catch {
-                // If couldn't be parsed then wait more
+                // If response can't be parsed set timeout
+                // for 100ms after which resonse will fail.
+                // If there will be some more data then timeout is cancelled.
                 timeoutHandler = setTimeout(() => {
                     this._data = null;
-                    // Error
-                    //this.emit("data", { success: false });
+                    this.emit("data", { success: false });
                 }, 100);
             };
         });
@@ -60,6 +62,8 @@ export default class Program extends EventEmmiter {
 
         this.processReference.on("close", (code) => {
             console.warn(`${this.formalName} exitted with error code ${code}`);
+            // Restart app after it crashes without blocking event loop
+            setImmediate(this.run);
         });
 
         this.processReference.on("error", (err) => {
