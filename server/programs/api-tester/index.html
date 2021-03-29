@@ -12,8 +12,26 @@
             registerInfoHandler((i) => {
                 const logsElement = document.getElementById("iLogs");
                 logsElement.innerText = JSON.stringify(i);
-                console.log(i);
             });
+
+            const wrappedSendRandomRequest = () =>
+                new Promise((resolve) => {
+                            const responseElement = document.getElementById("rResponser");
+                            sendRequest("PyApi tester" , { "Secret number is": Math.random() } ).then((r) => {
+                                responseElement.innerText = JSON.stringify(r);
+                                resolve(JSON.stringify(r));
+                            });
+                        });
+
+            const speedTest = async () => {
+              for (let j = 0; j < 20; j++) {
+                  console.time("Comm test");
+                  for (let i = 0; i < 100; i++) {
+                    const res = await wrappedSendRandomRequest();
+                  } 
+                  console.timeEnd("Comm test");
+              }
+            }
         </script>
     </head>
     <body>
