@@ -9,13 +9,14 @@ import { spawn } from 'child_process';
 import EventEmmiter from 'events';
 
 export default class Program extends EventEmmiter {
-    constructor(formalName, cmd, args = []) {
+    constructor(formalName, cmd, args = [], settings = {}) {
         super();
         this.formalName = formalName;
         this.cmd = cmd;
         this.cargs = args;
         this.processReference = null;
         this._data = null;
+        this.settings = settings;
     }
 
     run() {
@@ -61,9 +62,11 @@ export default class Program extends EventEmmiter {
         });
 
         this.processReference.on("close", (code) => {
-            console.warn(`${this.formalName} exitted with error code ${code}`);
             // Restart app after it crashes without blocking event loop
-            // setImmediate(this.run);
+            if (this.settings.autoRestart === true)
+                setImmediate(() => {
+                    this.run();
+                });
         });
 
         this.processReference.on("error", (err) => {
@@ -89,5 +92,10 @@ export default class Program extends EventEmmiter {
             throw "Requst must be an object";
 
         this.processReference.stdin.write(output);
+    }
+
+    close() {
+        this.processReference.kill(); 
+        this.settings.autoRestart = false;
     }
 }

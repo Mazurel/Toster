@@ -63,6 +63,9 @@ wsServer.on("connection", (currentSocket) => {
                     currentSocket.send(JSON.stringify(d));
                     prog.removeListener("data", sendResponse);
                 }
+                setTimeout(() => {
+                    prog.removeListener("data", sendResponse);
+                }, 1000);
             });        
             prog.send(msg);
         }
