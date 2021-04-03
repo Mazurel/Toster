@@ -11,6 +11,20 @@ Link to docs explaining how this project works and how to hack on it is [here](d
 This project is intended to be runned on raspberry pi with Gnu/Linux.
 For development is is not a problem to run it on some other unix based machine, although running it under Windows may raise some problems (not tested yet).
 
+## Installing on target machine
+
+> This is really experimental and needs more tests
+
+```sh
+sh ./scripts/installDeps.sh
+sh ./scripts/setupNetworking.sh
+sh ./scripts/setupServer.sh
+```
+
+Everything should work after that one 
+
+## Debugging outside environment
+
 ### Requirements
 - Stable or nightly build of `node.js` with `npm`.
 - `python3` (for most programs)

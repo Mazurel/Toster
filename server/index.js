@@ -22,7 +22,7 @@ const programsList = [];
 const __filename = import.meta.url.slice(7);
 const __dirname = dirname(__filename);
 
-const PORT = 3000;
+const PORT = 1337;
 
 const staticApp = express.static("public", {
     extensions: [ "html", "js", "css" ]
