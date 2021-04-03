@@ -1,14 +1,13 @@
 #!/bin/sh
 
-# Get into root
-sudo -Es
-
 echo Setting up files ...
 
 # Folder that will store all the data
 # TODO: Figure out better folder structure
 mkdir -p /usr/share/toster/
 cp -rf ./server/* /usr/share/toster/
+
+
 
 echo Setting up server ...
 npm install || echo Failed installing node modules && exit -1
@@ -21,7 +20,7 @@ Description=Toster server
 Type=simple
 ExecStart=npm start
 Restart=on-failure
-WorkingDirectory=/usr/share/toster/server
+WorkingDirectory=/usr/share/toster
 
 [Install]
 WantedBy=multi-user.target

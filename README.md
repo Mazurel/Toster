@@ -16,6 +16,9 @@ For development is is not a problem to run it on some other unix based machine, 
 > This is really experimental and needs more tests
 
 ```sh
+git clone https://github.com/Mazurel/Toster.git
+cd Toster
+sudo -Es
 sh ./scripts/installDeps.sh
 sh ./scripts/setupNetworking.sh
 sh ./scripts/setupServer.sh

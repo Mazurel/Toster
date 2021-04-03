@@ -6,13 +6,11 @@ echo Please ensure that internet is working, otherwise this script may break you
 echo Press enter to continue ...
 read 
 
-sudo -Es
-
 echo Removing Raspberry pi\' default network managers
 
 apt --autoremove purge ifupdown dhcpcd5 isc-dhcp-client isc-dhcp-common rsyslog
 apt-mark hold ifupdown dhcpcd5 isc-dhcp-client isc-dhcp-common rsyslog raspberrypi-net-mods openresolv
-rm -r /etc/network /etc/dhcp
+rm -rf /etc/network /etc/dhcp
 
 echo Setting up Systemd Networkd
 
@@ -45,9 +43,13 @@ cat > /etc/systemd/network/08-wlan0.network <<EOF
 [Match]
 Name=wlan0
 [Network]
-Address=192.168.0.1/24
+Address=192.168.1.1/24
 MulticastDNS=yes
 DHCPServer=yes
+IPMasquerade=yes
+DHCPServer=yes
+[DHCPServer]
+DNS=84.200.69.80 1.1.1.
 EOF
 
 # Ensure that it is readable

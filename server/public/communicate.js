@@ -76,7 +76,7 @@ const registerInfoHandler = (fn) => {
 // Private functions and variables
 //
 
-const _ws = new WebSocket('ws://localhost:8000');
+const _ws = new WebSocket(`ws://${location.hostname}:8000`);
 const _communicationTimeout = 1000;
 
 _ws.onerror = (err) => {

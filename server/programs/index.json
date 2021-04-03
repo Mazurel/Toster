@@ -8,13 +8,13 @@
     {
         "Enable": true,
         "Name": "Python repl",
-        "Program": "python",
+        "Program": "python3",
         "Path": "python-repl/repl.py",
         "Static" : "python-repl/"
     },
     {
         "Name": "PyApi tester",
-        "Program": "python",
+        "Program": "python3",
         "Path": "api-tester/tester.py",
         "Static" : "api-tester/"
     }
