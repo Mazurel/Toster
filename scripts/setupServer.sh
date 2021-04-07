@@ -5,9 +5,9 @@ echo Setting up files ...
 # Folder that will store all the data
 # TODO: Figure out better folder structure
 mkdir -p /usr/share/toster/
-cp -rf ./server/* /usr/share/toster/
+cp -rf ./* /usr/share/toster/
 
-
+cd /usr/share/toster/server
 
 echo Setting up server ...
 npm install || echo Failed installing node modules && exit -1
@@ -20,7 +20,7 @@ Description=Toster server
 Type=simple
 ExecStart=npm start
 Restart=on-failure
-WorkingDirectory=/usr/share/toster
+WorkingDirectory=/usr/share/toster/server
 
 [Install]
 WantedBy=multi-user.target

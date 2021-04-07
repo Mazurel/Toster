@@ -1,5 +1,10 @@
-x = 2
-y = 3
-print(x + y)
+from gpiozero import LED
+from time import sleep
 
-print(x) 
+led = LED(17)
+
+while True:
+    led.on()
+    sleep(1)
+    led.off()
+    sleep(1)

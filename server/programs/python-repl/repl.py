@@ -24,7 +24,7 @@ def reqHandler(req):
         with open(".interp.py", "w") as f:
             f.write(req["msg"]["code"])
         
-        with Popen(["python", ".interp.py"], stderr=PIPE, stdin=PIPE, stdout=PIPE) as p:
+        with Popen(["python3", ".interp.py"], stderr=PIPE, stdin=PIPE, stdout=PIPE) as p:
             result = p.stdout.read().decode("utf-8")
             errors = p.stderr.read().decode("utf-8")
             toster.sendResponse(req, { "err": errors, "response": result })
