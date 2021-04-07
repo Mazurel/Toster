@@ -20,7 +20,10 @@ export default class Program extends EventEmmiter {
     }
 
     run() {
-        this.processReference = spawn(this.cmd, this.cargs);
+        this.processReference = spawn(this.cmd, this.cargs, 
+            {
+                cwd : this.settings.pwd
+            });
 
         this._data = null; // Create empty buffer
 
@@ -94,8 +97,19 @@ export default class Program extends EventEmmiter {
         this.processReference.stdin.write(output);
     }
 
+    // TODO: Make killing smarter: firstly sigkill, then sigterm 
+    //       like systemd does it. Also test how it works.
+
     close() {
         this.processReference.kill(); 
         this.settings.autoRestart = false;
+    }
+
+    restart() {
+        this.processReference.on("close", () => {
+            this.run();
+        });
+
+        this.processReference.kill();
     }
 }

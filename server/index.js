@@ -96,6 +96,19 @@ app.get("/api/programs", (req, res) => {
     res.json(programs.getAllNames());
 });
 
+app.post("/api/program/restart", (req, res) =>  {
+    const programName = req.query.name;
+    if (typeof programName === "string") {
+        const prog = programs.findByName(programName);
+        if (prog !== null) {
+            prog.restart();
+            res.json({ success: true });
+            return;
+        }
+    }
+    res.json({ success: false });
+});
+
 app.listen(PORT, () => {
     console.log(`Thinking on port ${PORT}`);
 })

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# What is it supposed to be:
 # This script acts as a simple json based repl.
 # Input code needs to be inside "code" field.
 # Output code sets success and result field.
@@ -13,27 +14,28 @@
 import json
 from time import sleep
 import sys
+import os
+from subprocess import Popen, PIPE
 
-while True:
-    response = { "type": "info", "msg": { "hello": "world" } }
-    print(json.dumps(response))
-    sys.stdout.flush()
-    sleep(10)
-    continue
-    text_input = input() 
-    str_input = json.loads(text_input, strict=False)["code"] 
-    __repl_result = None
+import toster
+
+def reqHandler(req):
     try:
-        if "=" in str_input or "import" in str_input or "for" in str_input:
-            exec(str_input)
-        else:
-            exec("__repl_result = {}".format(str(str_input)))
-
-        result = { 'success' : True }
-        if __repl_result != None:
-            result["result"] = __repl_result
+        with open(".interp.py", "w") as f:
+            f.write(req["msg"]["code"])
+        
+        with Popen(["python", ".interp.py"], stderr=PIPE, stdin=PIPE, stdout=PIPE) as p:
+            result = p.stdout.read().decode("utf-8")
+            errors = p.stderr.read().decode("utf-8")
+            toster.sendResponse(req, { "err": errors, "response": result })
     except:
-        # TODO: Be more verbose
-        result = { 'success' : False }
-     
-    print(json.dumps(result))
+        toster.sendResponse(req, { "t": False, "response": req["msg"]["code"] })
+
+toster.registerRequestCallback(reqHandler)
+toster.start(block=True)
+
+#while True:
+#    toster.sendInfo({ "hello": "world" })
+#    sleep(10)
+#    continue
+

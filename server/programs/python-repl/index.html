@@ -1,19 +1,44 @@
 <html>
     <head>
+        <link href="./prism.css" rel="stylesheet"></link>
         <script type="text/javascript" src="/public/communicate.js"></script>
-        <script type="text/javascript">
+        <script type="text/javascript" src="prism.js"></script>
+        <script type="module">
+            import { CodeJar } from './codejar.js';
+            const sendNewData = (code) => {
+                const resultField = document.getElementById("response");
+
+                sendRequest("Python repl", { code : code })
+                    .then((response) => {
+                        if (response.msg.err !== "" && response.msg.err !== null)
+                            resultField.innerHTML = response.msg.err.replaceAll("\n", "<br/>");
+                        else 
+                            resultField.innerHTML = response.msg.response.replaceAll("\n", "<br/>");
+                    });
+            }
+
             window.onload = () => {
-                return;
-                registerInfoHandler((i) => {
-                    //console.log(i);
+                const editor = document.getElementById("editor");
+                const highlight = (code) => {
+                    code.innerHTML = Prism.highlight(code.innerText, Prism.languages.python, "python");
+                }
+                const jar = CodeJar(editor, highlight, {tab: '\t'});
+                let timeoutRef = null;
+                jar.onUpdate((code) => {
+                    if (timeoutRef !== null) clearTimeout(timeoutRef);
+                    timeoutRef = null;
+                    timeoutRef = setTimeout(() => {
+                        sendNewData(code);
+                    }, 200);
                 });
-            };
+            }
         </script>
     </head>
     <body>
         <div>
             <h1> Python live repl </h1>
-            <textarea id="plr" rows="8" cols="30"></textarea>
+            <div id="editor"></div>
+            <h2 id="response"></h2>
         </div>
     </body>
 </html>

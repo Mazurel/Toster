@@ -10,7 +10,9 @@
         "Name": "Python repl",
         "Program": "python3",
         "Path": "python-repl/repl.py",
-        "Static" : "python-repl/"
+        "Static" : "python-repl/",
+        "AutoRestart": true,
+        "pwd": "python-repl/"
     },
     {
         "Name": "PyApi tester",

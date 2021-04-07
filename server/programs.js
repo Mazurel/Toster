@@ -71,7 +71,8 @@ export default function startPrograms(app) {
                                           individualProgram.Program, 
                                           [ join(__dirname, "programs", individualProgram.Path) ],
                                           {
-                                            autoRestart: individualProgram.autoRestart
+                                            autoRestart: individualProgram.AutoRestart,
+                                            pwd: individualProgram.pwd === undefined ? null : join(__dirname, "programs", individualProgram.pwd)
                                           }); 
                     
                     p.run();
