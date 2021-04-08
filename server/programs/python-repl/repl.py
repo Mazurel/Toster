@@ -15,7 +15,7 @@ import json
 from time import sleep
 import sys
 import os
-from subprocess import Popen, PIPE
+from subprocess import TimeoutExpired, Popen, PIPE
 
 import toster
 
@@ -25,9 +25,14 @@ def reqHandler(req):
             f.write(req["msg"]["code"])
         
         with Popen(["python3", ".interp.py"], stderr=PIPE, stdin=PIPE, stdout=PIPE) as p:
-            result = p.stdout.read().decode("utf-8")
-            errors = p.stderr.read().decode("utf-8")
-            toster.sendResponse(req, { "err": errors, "response": result })
+            try:
+                p.wait(0.5) # Wait for 0.5 second
+                result = p.stdout.read().decode("utf-8")
+                errors = p.stderr.read().decode("utf-8")
+                toster.sendResponse(req, { "err": errors, "response": result })
+            except TimeoutExpired:
+                p.kill()
+                toster.sendResponse(req, { "err": "Program timed out ...", "response": "" })
     except:
         toster.sendResponse(req, { "t": False, "response": req["msg"]["code"] })
 

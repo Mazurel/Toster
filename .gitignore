@@ -3,5 +3,6 @@ server/node_modules
 server/package-lock.json
 .obsidian
 
-# ;)
-./pseudokod.py
+# Python repl
+server/programs/python-repl/.interp.py
+server/programs/python-repl/__pycache__
