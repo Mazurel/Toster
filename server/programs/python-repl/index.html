@@ -5,16 +5,28 @@
         <script type="text/javascript" src="prism.js"></script>
         <script type="module">
             import { CodeJar } from './codejar.js';
+            const updateResponse = (response) => {
+                const resultField = document.getElementById("response");
+                if (response.msg.err !== "" && response.msg.err !== null)
+                    resultField.innerHTML = response.msg.err.replaceAll("\n", "<br/>");
+                else 
+                    resultField.innerHTML = response.msg.response.replaceAll("\n", "<br/>");
+            }
+            const appendResponse = (response) => {
+                if (response.program != "Python repl") return;
+                const resultField = document.getElementById("response");
+                if (response.msg.err !== "" && response.msg.err !== null)
+                    resultField.innerHTML += response.msg.err.replaceAll("\n", "<br/>");
+                else 
+                    resultField.innerHTML += response.msg.response.replaceAll("\n", "<br/>");
+            }
+
+
             const sendNewData = (code) => {
                 const resultField = document.getElementById("response");
-
+                resultField.innerHTML = "";
                 sendRequest("Python repl", { code : code })
-                    .then((response) => {
-                        if (response.msg.err !== "" && response.msg.err !== null)
-                            resultField.innerHTML = response.msg.err.replaceAll("\n", "<br/>");
-                        else 
-                            resultField.innerHTML = response.msg.response.replaceAll("\n", "<br/>");
-                    });
+                    .then(updateResponse);
             }
 
             window.onload = () => {
@@ -31,6 +43,8 @@
                         sendNewData(code);
                     }, 200);
                 });
+
+                registerInfoHandler(appendResponse);
             }
         </script>
     </head>

@@ -19,20 +19,31 @@ from subprocess import TimeoutExpired, Popen, PIPE
 
 import toster
 
+pRef = None
+
 def reqHandler(req):
+    global pRef
+
     try:
+        if (pRef != None):
+            pRef.kill()
+            pRef = None
+            toster.sendInfo({ "text": "I have restarted" })
         with open(".interp.py", "w") as f:
             f.write(req["msg"]["code"])
-        
-        with Popen(["python3", ".interp.py"], stderr=PIPE, stdin=PIPE, stdout=PIPE) as p:
+
+        pRef = Popen(["python3", ".interp.py"], stderr=PIPE, stdin=PIPE, stdout=PIPE)
+        toster.sendResponse(req, { "response": "Program have started !" })
+        finished = False
+        while not finished: 
             try:
-                p.wait(0.5) # Wait for 0.5 second
-                result = p.stdout.read().decode("utf-8")
-                errors = p.stderr.read().decode("utf-8")
-                toster.sendResponse(req, { "err": errors, "response": result })
+                pRef.wait(0.1) # Wait for 0.1 second
+                finished = True
             except TimeoutExpired:
-                p.kill()
-                toster.sendResponse(req, { "err": "Program timed out ...", "response": "" })
+                pass
+            result = pRef.stdout.read().decode("utf-8")
+            errors = pRef.stderr.read().decode("utf-8")
+            toster.sendInfo({ "err": errors, "response": result })
     except:
         toster.sendResponse(req, { "t": False, "response": req["msg"]["code"] })
 
