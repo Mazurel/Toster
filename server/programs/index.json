@@ -1,12 +1,25 @@
 [
     {
+        "Name": "UART Tester",
+        "Program": "python3",
+        "Path": "uart-test/tester.py",
+        "Static" : "uart-test/"
+    },
+    {
+        "Name": "Engine steering",
+        "Program": "python3",
+        "Path": "engine-steering/tester.py",
+        "Static" : "engine-steering/"
+    },
+    {
+        "Enable": false,
         "Name": "Echo program",
         "Program": "sh",
         "Path": "echo/echo.sh",
         "Static" : "echo/"
     },
     {
-        "Enable": true,
+        "Enable": false,
         "Name": "Python repl",
         "Program": "python3",
         "Path": "python-repl/repl.py",

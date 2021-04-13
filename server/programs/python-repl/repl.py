@@ -37,7 +37,7 @@ def reqHandler(req):
         finished = False
         while not finished: 
             try:
-                pRef.wait(0.1) # Wait for 0.1 second
+                pRef.wait(0.2) # Wait for 0.1 second
                 finished = True
             except TimeoutExpired:
                 pass

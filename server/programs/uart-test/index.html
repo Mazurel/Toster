@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <script type="text/javascript" src="/public/communicate.js"></script>
+        <script type="text/javascript">
+        	const changeState = () => {
+			const port = document.getElementById("port").value;
+			const state = document.getElementById("stateSelect").value;
+			const resDiv = document.getElementById("response");
+
+			sendRequest("UART Tester", { path: port, message: state }).then((r) => {
+				resDiv.innerText = r.msg.response;
+			});
+		}
+        </script>
+    </head>
+    <body>
+        <div>
+            <h1> UART tester </h1>
+	    <input type="text" id="port" placeholder="Path" value="/dev/ttyUSB0"></input>
+	    <input type="text" id="stateSelect" placeholder="Message" value="dupa"></input>
+            <button id="sender" onclick="changeState()">Send</button>
+	    </br>
+	    <div id="response"></div>
+        </div>
+    </body>
+</html>
