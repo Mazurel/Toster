@@ -8,7 +8,7 @@
     {
         "Name": "Engine steering",
         "Program": "python3",
-        "Path": "engine-steering/tester.py",
+        "Path": "engine-steering/steer.py",
         "Static" : "engine-steering/"
     },
     {

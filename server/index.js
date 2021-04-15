@@ -53,6 +53,8 @@ wsServer.on("connection", (currentSocket) => {
         const pName = msg.program;
         const prog = programs.findByName(pName);
         if (prog !== null) {
+            if (prog.isClosed()) return;
+
             const myId = msg.id;
 
             // Send response back only if id is valid and 

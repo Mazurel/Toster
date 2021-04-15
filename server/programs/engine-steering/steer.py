@@ -29,16 +29,17 @@ def reqHandler(req):
         else:
             tbs += "B"
         tbs += str(vel["power"])
-    ser = serial.Serial("/dev/ttyUSB0", timeout=0)    #Open named port 
+    ser = serial.Serial("/dev/ttyUSB0", timeout=0)
     fd = ser.fileno()
     oldAttr = termios.tcgetattr(fd)
     oldAttr[2] = oldAttr[2] & ~termios.HUPCL
     termios.tcsetattr(fd, termios.TCSANOW, oldAttr)
-    ser.baudrate = 9600                     #Set baud rate to 9600
+    ser.baudrate = 9600
     ser.nonblocking()
     ser.write(bytes(tbs, "UTF-8"))
     ser.close()
     toster.sendResponse(req, {"tbs": tbs})
+    toster.sendInfo(req["msg"])
 
 toster.registerRequestCallback(reqHandler)
 toster.start(block=True)

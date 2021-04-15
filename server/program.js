@@ -17,6 +17,7 @@ export default class Program extends EventEmmiter {
         this.processReference = null;
         this._data = null;
         this.settings = settings;
+        this.setMaxListeners(30);
     }
 
     run() {
@@ -66,10 +67,14 @@ export default class Program extends EventEmmiter {
 
         this.processReference.on("close", (code) => {
             // Restart app after it crashes without blocking event loop
-            if (this.settings.autoRestart === true)
+            if (this.settings.autoRestart === true) {
                 setImmediate(() => {
                     this.run();
                 });
+            }
+            else {
+                this.closed = true;
+            }
         });
 
         this.processReference.on("error", (err) => {
@@ -106,10 +111,14 @@ export default class Program extends EventEmmiter {
     }
 
     restart() {
-        this.processReference.on("close", () => {
+        this.processReference.once("close", () => {
             this.run();
         });
 
         this.processReference.kill();
+    }
+
+    isClosed() {
+        return this.closed; 
     }
 }
