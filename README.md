@@ -1,30 +1,40 @@
 # Toster
 
+> This repo is in progress, so if you feel like something is missing fire an issue, can be in polish :)
+
 This repo contains source code for project called "Robot Toster".
-Some parts of the code or the docs may not be in English, although it is recommended to use English in here.
+It is recommended to write in English, but everything else then code itself can be written in polish if you prefer so (it's just simpler for me to code and write in the same language).
 Feel free to contribute as much as you wish.
 
 Link to docs explaining how this project works and how to hack on it is [here](docs/docs.md). 
 
 ## Starting up the server
 
-This project is intended to be runned on raspberry pi with Gnu/Linux.
-For development is is not a problem to run it on some other unix based machine, although running it under Windows may raise some problems (not tested yet).
+This project is intended to be run on raspberry pi with Gnu/Linux.
+For development is is not a problem to run it on some other unix based os, although running it under Windows may raise some problems (not tested yet).
 
 ## Installing on target machine
 
-> This is really experimental and needs more tests
+> Tested only for Rpi Os
 
 ```sh
-git clone https://github.com/Mazurel/Toster.git
+# I assume that you have ssh enabled and ethernet cable connected
+
+# You need to have git already, to do so run:
+sudo apt install git
+
+# Clone repo
+git clone https://github.com/SKARPG/Toster.git
+# You can also clone it on your PC and copy it
+# to raspberry pi via sftp
+
 cd Toster
 sudo -Es
+# Run installation scripts
 sh ./scripts/installDeps.sh
 sh ./scripts/setupNetworking.sh
 sh ./scripts/setupServer.sh
 ```
-
-Everything should work after that one 
 
 ## Debugging outside environment
 
@@ -85,3 +95,20 @@ Static - A path to folder with static html content that will be served for the p
 Enable - This field is optional, it resolves to `true` by default.
 
 *After adding custom program, remember to restart server !*
+
+## Managing server
+
+Server (when installed via installation scripts) is installed into `/usr/share/toster`, everything can be found there.
+For example all programs are located in `/usr/share/toster/server/programs`.
+
+Server is managed as a systemd service. Such solution really simplifies whole server execution, for example to check status of the server you can run:
+
+```bash
+systemctl status toster
+```
+
+Or to restart it, just run:
+
+```bash
+sudo systemctl restart toster
+```

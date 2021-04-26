@@ -24,3 +24,8 @@ There are three types of messages. The type is specified via `type` field.
 1. Response - Response message to the request message that program has received.
 2. Request - Request to the program from client.
 3. Info - Some kind of information transmitted from program to all clients.
+
+## Some other notes
+
+1. Message ID when sending request from webpage to server is acquired via RESTful API.
+2. Info messages don't have an ID.

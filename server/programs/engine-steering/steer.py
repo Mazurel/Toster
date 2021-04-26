@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 
+import fcntl
 import json
-from time import sleep
 import sys
+import termios
+from time import sleep
 
 import toster
 import serial
-
-import termios
-import fcntl
-
 
 def reqHandler(req):
     tbs = ""
