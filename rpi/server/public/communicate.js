@@ -58,8 +58,10 @@ const sendRequest = (program, message) => {
     });
 }
 
+let infoListeners = [];
+
 const registerInfoHandler = (fn) => {
-    _ws.addEventListener("message", (msg) => {
+    const lFn = (msg) => {
         try {
             const message = JSON.parse(msg.data);
             if (message.type === "info") {
@@ -69,19 +71,44 @@ const registerInfoHandler = (fn) => {
         }   
         catch {
         }
-    });
+    };
+
+    _ws.addEventListener("message", lFn);
+    infoListeners.push(lFn);
 };
 
 //
 // Private functions and variables
 //
 
-const _ws = new WebSocket(`ws://${location.hostname}:8000`);
+let _ws;
 const _communicationTimeout = 1000;
 
-_ws.onerror = (err) => {
-    console.error(err);
-}
+const setupWS = () => {
+    _ws = new WebSocket(`ws://${location.hostname}:8000`);
+
+    _ws.onerror = (err) => {
+        console.error(err);
+    }
+
+    _ws.onclose = () => {
+        setTimeout(() => {
+            setupWS();
+            
+            _ws.onopen = () => {
+                const infoCopy = infoListeners.slice();
+                infoListeners = [];
+
+                for (const f of infoCopy) {
+                    registerInfoHandler(f);
+                }
+            };
+        }, 5 * _communicationTimeout);
+    }
+};
+
+setupWS();
+
 
 const _getUniqueId = () => {
     return new Promise((resolve, reject) => {
