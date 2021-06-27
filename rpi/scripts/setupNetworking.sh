@@ -23,7 +23,7 @@ systemctl enable systemd-networkd.service systemd-resolved.service
 echo Configuring Systemd Networkd
 
 # Fix possible dns errors
-echo "DNSSEC=no" >> /etc/resolv.conf 
+echo "DNSSEC=no" >> /etc/systemd/resolved.conf
 
 # Setup dynamic ethernet connection
 cat > /etc/systemd/network/20-wired.network <<EOF
