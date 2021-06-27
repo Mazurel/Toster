@@ -104,3 +104,16 @@ Or to restart it, just run:
 ```bash
 sudo systemctl restart toster
 ```
+
+## Debugging programs
+
+You **can't** use stdout for debugging. Stdout is reserved only for IPC communication.
+If you want to debug programs that are runned by node.js server you need to use stderr.
+
+For example for python you can use:
+```python
+print(msg, file=sys.stderr)
+```
+
+All stderr output from programs are printed to stdout by node.js server.
+
