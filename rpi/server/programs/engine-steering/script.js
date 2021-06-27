@@ -69,10 +69,8 @@ let serialPort;
 
 function setup() {
 	serialPort = prompt("Please provide a serial port ... (likely /dev/serial0)");
-
 	createCanvas(windowWidth, windowHeight);
 	setupGui();
-
 	registerInfoHandler((msg) => {
 		// TODO: Add sync across all the programs
 	});
