@@ -8,7 +8,7 @@ from os import path
 import toster
 
 # TODO: Change it to /var/db/toster-soundboard on rpi
-TRACKS_PATH = "/tmp/db/toster-soundboard"
+TRACKS_PATH = "/var/db/toster-soundboard"
 
 try:
     os.makedirs(TRACKS_PATH)
@@ -27,6 +27,8 @@ def onRequest(req):
 
         # Play sound via omxplayer
         os.system(f"omxplayer --no-keys {soundTrackPath}")
+
+        toster.sendResponse(req, { "ok": True })
     elif "list" in msg and msg["list"]:
         tracks = os.listdir(TRACKS_PATH)
 
