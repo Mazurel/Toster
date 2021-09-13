@@ -1,0 +1,28 @@
+Info 0    [15:14:58.258] Starting TS Server
+Info 1    [15:14:58.258] Version: 4.3.4
+Info 2    [15:14:58.259] Arguments: /nix/store/qgfy0qbjwnnmiwsdynjkzn664mcj9nw4-nodejs-14.17.1/bin/node /home/mateusz/.emacs.d/.cache/lsp/npm/typescript/bin/tsserver --logFile /home/mateusz/ttais/Toster/rpi/server/.log/tsserver.log --logVerbosity info --cancellationPipeName /tmp/ca5b63244e3c578f58c1ed371a657153/tscancellation*
+Info 3    [15:14:58.259] Platform: linux NodeVersion: 14 CaseSensitive: true
+Info 4    [15:14:58.259] ServerMode: undefined syntaxOnly: false hasUnknownServerMode: undefined
+Info 5    [15:14:58.273] Search path: /home/mateusz/ttais/Toster/rpi/server
+Info 6    [15:14:58.273] For info: /home/mateusz/ttais/Toster/rpi/server/index.js :: No config files found.
+Info 7    [15:14:58.277] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 8    [15:14:58.917] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: true Elapsed: 639.9232829995453ms
+Info 9    [15:14:58.917] Project '/dev/null/inferredProject1*' (Inferred)
+Info 10   [15:14:58.917] 	Files (21)
+
+Info 11   [15:14:58.917] -----------------------------------------------
+Info 12   [15:15:03.337] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 13   [15:15:03.847] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 2 structureChanged: true Elapsed: 510.11085199937224ms
+Info 14   [15:15:03.848] Project '/dev/null/inferredProject1*' (Inferred)
+Info 15   [15:15:03.848] 	Files (97)
+
+Info 16   [15:15:03.848] -----------------------------------------------
+Info 17   [15:15:04.202] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 18   [15:15:04.211] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 3 structureChanged: true Elapsed: 8.99765800125897ms
+Info 19   [15:15:04.211] Project '/dev/null/inferredProject1*' (Inferred)
+Info 20   [15:15:04.211] 	Files (97)
+
+Info 21   [15:15:04.211] -----------------------------------------------
+Info 22   [15:15:06.452] Before ensureProjectForOpenFiles:
+Info 23   [15:15:06.452] After ensureProjectForOpenFiles:
+Info 24   [15:15:06.452] got projects updated in background, updating diagnostics for /home/mateusz/ttais/Toster/rpi/server/index.js
