@@ -11,3 +11,6 @@ rpi/server/programs/python-repl/__pycache__
 # Ignoring cached stuff
 */__pycache__
 *.pyc
+
+
+.log
