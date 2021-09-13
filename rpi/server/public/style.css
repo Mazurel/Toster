@@ -1,0 +1,214 @@
+
+@font-face {
+    font-family: game;
+    src: url('assets/fonts/PressStart2P-Regular.ttf') format("truetype");
+}
+
+html,
+body{
+    font-family: game;
+    margin: 0;
+    line-height: 1.4;
+}
+
+body{
+    color: lavenderblush;
+    background-color: #222;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    max-width: 1320px;
+    text-align: center;
+    padding-bottom: 3rem;
+}
+#communication{
+    text-align: start;
+    margin: 0 2rem;
+}
+
+#communication_form{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+input{
+    background-color: grey;
+    color: lavenderblush;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    border:rgba(255, 240, 245, 0.568) solid 2px;
+    width: 35%;
+}
+input:hover{
+    opacity: 0.9;
+}
+input::placeholder{
+    color: rgba(255, 240, 245, 0.568);
+}
+input::placeholder:hover{
+    opacity: 0.9;
+}
+
+button{
+    background-color: grey;
+    color: lavenderblush;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    border:rgba(255, 240, 245, 0.568) solid 2px;
+    width: 10%;
+
+}
+button:hover{
+    opacity: 0.9;
+}
+button:active{
+    transform: translateY(2px);
+}
+
+header{
+    align-items: center;
+    margin-top: 3rem;
+}
+
+footer{
+    display: flex;
+    padding: 3rem 0;
+    font-size: 0.8rem;
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: rgb(43, 42, 42);
+}
+footer p{
+    position: relative;
+    text-align: center;
+    
+}
+footer div{
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 0 1rem;
+    display: grid;
+    place-items: center;
+}
+
+footer div p i,
+footer div p span{
+    display: inline-block;
+    vertical-align: middle;
+    text-align: justify;
+    margin-right: 0.5em;
+    opacity: 0.8;
+}
+
+/*------------------- tooltip --------------------*/
+.tooltip::before,
+.tooltip::after {
+  --scale: 0;
+  --arrow-size: 10px;
+  --tooltip-color: #e8ede0;
+
+  position: absolute;
+  top: -.25rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+  transition: 150ms transform;
+  transform-origin: bottom center;
+}
+
+.tooltip::before {
+  --translate-y: calc(-100% - var(--arrow-size));
+
+  content: attr(data-tooltip);
+  color: #242423;
+  padding: .5rem;
+  border-radius: .3rem;
+  text-align: center;
+  width: max-content;
+  max-width: 100%;
+  background: var(--tooltip-color);
+}
+
+.tooltip:hover::before,
+.tooltip:hover::after {
+  --scale: 1;
+}
+
+.tooltip::after {
+  --translate-y: calc(-1 * var(--arrow-size));
+
+  content: '';
+  border: var(--arrow-size) solid transparent;
+  border-top-color: var(--tooltip-color);
+  transform-origin: top center;
+}
+
+@media screen and (max-width: 1000px){
+    body{
+        font-size: 90%;
+    }
+    footer{
+       display: grid;
+       grid-template-rows: 2fr, 1fr;
+       grid-template-columns: repeat(2, 1fr);
+       padding-top: 1rem;
+       padding-bottom: 0%;
+    }
+    #email{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    #address{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    #copyrights{
+        grid-row: 2;
+        grid-column: 1/-1;
+    }
+}
+
+@media screen and (max-width: 710px){
+    body{
+        font-size: 80%;
+    }
+    footer{
+        display: flex;
+        padding-top: 1rem;
+        padding-bottom: 0%;
+        flex-direction: column-reverse;
+     }
+     footer div{
+         padding: 0.25rem 0;
+     }
+     #communication_form{
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         grid-template-rows: 1fr 1fr;
+     }
+     #programNameId{
+         grid-column: 1;
+         grid-row: 1;
+     }
+     #requestId{
+        grid-column: 2;
+        grid-row: 1;
+     }
+     #communication_form button{
+         grid-column: 2;
+         grid-row: 2;
+     }
+     input{
+         width: 90%;
+         margin: 5%;
+     }
+     button{
+         margin:5%;
+         width: 50%;
+         justify-self: end;
+     }
+}

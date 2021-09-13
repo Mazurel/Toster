@@ -1,22 +1,70 @@
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mózg</title>
+    <link type="text/css" rel="stylesheet" href="public/style.css">
+    <link rel="icon" type="image/png" sizes="230x230" href="public/assets/img/favicon.png">
+    <link type="text/css" rel="stylesheet" href="public/assets/fontawesome/css/all.min.css">
     <script type="text/javascript" src="public/communicate.js">
     <script type="text/javascript">
         sendRequest("Hi man").then((r) => {console.log(r)});
     </script>
     <script type="text/javascript" src="public/loader.js"></script>
+    <script type="text/javascript" src="public/assets/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="public/assets/jquery/copy.js"></script>
+    
   </head>
   <body>
-    <div>
-      <h2> Communication Tester </h2>
-      <input id="programNameId" placeholder="Program name">
-      <input id="requestId" placeholder="Request">
-      <button id="send" 
-          onclick="const pN = document.getElementById('programNameId').value; sendRequest(pN, JSON.parse(document.getElementById('requestId').value)).then((v)=>{ console.log(v) })" >
-          Send</button>
+    <div class="container">
+      <header>
+        <h1>ROBOT-TOSTER</h1>
+        <h3>THE ULTIMATE SANDWICH MAKER</h3>
+      </header>
+      <img src="public/assets/img/neptr.png">
+      <main>
+        <div id="communication">
+          <h2> Communication Tester </h2>
+          <div id="communication_form">
+            <input id="programNameId" placeholder="Program name">
+            <input id="requestId" placeholder="Request">
+            <button id="send" 
+                onclick="const pN = document.getElementById('programNameId').value; sendRequest(pN, JSON.parse(document.getElementById('requestId').value)).then((v)=>{ console.log(v) })" >
+                Send</button>
+          </div>
+        </div>
+        </br>
+        <div id="programsContainer">
+          
+        </div>
+      </main>
     </div>
-    </br>
-    <div id="programsContainer"></div>
+    <footer>
+        <div id="copyrights">
+            <p>
+                <i class="far fa-copyright fa-3x"></i>
+                <span>
+                    Copyrights 2021 SKAR
+                </span>
+            </p>
+        </div>
+        <div id="address">
+            <p class="tooltip" data-tooltip="Click to copy." onclick="copy(this)" onclick="copy(this)">
+                <i class="fas fa-map-marked fa-3x"></i> 
+                <span >
+                  Gdańsk University of Technology,<br>Gabriela Narutowicza 11/12,<br>80-233 Gdańsk, Poland
+                </span>
+            </p>
+        </div>
+        <div id="email">
+            <p class="tooltip" data-tooltip="Click to copy." onclick="copy(this)" onclick="copy(this)">
+                <i class="fas fa-envelope fa-3x"></i>
+                <span>
+                    skar.kontakt@gmail.com
+                </span>
+            </p>
+        </div>
+      </footer>
   </body>
 </html>

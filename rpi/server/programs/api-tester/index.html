@@ -33,15 +33,21 @@
               }
             }
         </script>
+        <link type="text/css" rel="stylesheet" href="../public/style.css">
+        <link type="text/css" rel="stylesheet" href="api_style.css">
     </head>
     <body>
         <div>
-            <h1> Api Tester </h1>
-            <button id="rSender" onclick="sendRandomRequest()">Send random request</button>
-            <h2>Latest response:</h2>
-            <div id="rResponser"></div>
-            <h2>Latest info:</h2>
-            <div id="iLogs"></div>
+            <h2> Api Tester </h2>           
+            <div id="api_form">
+                <div>
+                    <button id="rSender" onclick="sendRandomRequest()">Send random request</button>
+                </div>
+                <h2>Latest response:</h2>
+                <div id="rResponser"></div>
+                <h2>Latest info:</h2>
+                <div id="iLogs"></div>
+            </div>
         </div>
     </body>
 </html>

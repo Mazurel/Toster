@@ -1,0 +1,40 @@
+body{
+    margin: 0 2rem;
+}
+div{
+    width: 100%;
+}
+#uart_form{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+@media screen and (max-width: 710px){
+    #uart_form{
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         grid-template-rows: 1fr 1fr;
+     }
+     #port{
+         grid-column: 1;
+         grid-row: 1;
+     }
+     #stateSelect{
+        grid-column: 2;
+        grid-row: 1;
+     }
+     #uart_form button{
+         grid-column: 2;
+         grid-row: 2;
+     }
+     input{
+         width: 90%;
+         margin: 5%;
+     }
+     button{
+         margin:5%;
+         width: 50%;
+         justify-self: end;
+     }
+}

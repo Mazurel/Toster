@@ -2,6 +2,8 @@
 server/node_modules
 server/package-lock.json
 .obsidian
+rpi/server/node_modules
+rpi/server/.vscode
 
 # Python repl
 server/programs/python-repl/.interp.py

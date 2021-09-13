@@ -24,8 +24,9 @@ window.onload = () => {
         for (const program of programs) {
             const frame = document.createElement("iframe");
             frame.setAttribute("src", program + "/index.html");
-            frame.setAttribute("width", "640");
-            frame.setAttribute("height", "500");
+            frame.setAttribute("width", "100%");
+            frame.setAttribute("height", "400");
+            frame.setAttribute("frameBorder", "0");
             pc.appendChild(frame);
         }
     });
