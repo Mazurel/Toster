@@ -3,11 +3,30 @@
         <script type="text/javascript" src="/public/communicate.js"></script>
         <script type="text/javascript" src="script.js">
         </script>
+	<link type="text/css" rel="stylesheet" href="../public/style.css">
+	<style>
+	      body {
+		  width: 100%;
+	      }
+	      
+	      #sound {
+		  display: flex;
+		  flex-direction: row;
+		  flex-wrap: wrap;
+	      }
+	      .soundbutton {
+		  height: 100px;
+		  width: 18%;
+		  color: white;
+		  font-size: 24px;
+		  font-weight: bold;
+		  margin: 10px;
+	      }
+	</style>
     </head>
     <body>
       <div>
-	<select name="sound" id="sound"></select>
-	<button id="play" onClick="playSound()" >Play</button>
+	<div name="sound" id="sound"></div>
       </div>
     </body>
 </html>
