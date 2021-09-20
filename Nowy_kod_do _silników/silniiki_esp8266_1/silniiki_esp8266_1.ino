@@ -136,21 +136,11 @@ void loop() {
     D = 'L';
     X = Serial.parseInt();
     turn();
-    Serial.println((String)"Y= "+Y);
-    Serial.println((String)"YR= "+YR);
-    Serial.println((String)"YL= "+YL);
-    Serial.println((String)"D= "+D);
-    Serial.println((String)"X= "+X);
     break;
     case 'R':
     D = 'R';
     X = Serial.parseInt();
     turn();
-    Serial.println((String)"Y= "+Y);
-    Serial.println((String)"YR= "+YR);
-    Serial.println((String)"YL= "+YL);
-    Serial.println((String)"D= "+D);
-    Serial.println((String)"X= "+X);
     break;
     }
   }
