@@ -29,7 +29,6 @@ echo "DNSSEC=no" >> /etc/systemd/resolved.conf
 cat > /etc/systemd/network/20-wired.network <<EOF
 [Match]
 Name=e*
-Type=ether
 
 [Network]
 LLMNR=no
@@ -49,7 +48,7 @@ DHCPServer=yes
 IPMasquerade=yes
 DHCPServer=yes
 [DHCPServer]
-DNS=84.200.69.80 1.1.1.
+DNS=84.200.69.80 1.1.1.1
 EOF
 
 # Ensure that it is readable
