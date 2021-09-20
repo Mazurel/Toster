@@ -32,5 +32,11 @@
         "Program": "python3",
         "Path": "api-tester/tester.py",
         "Static" : "api-tester/"
+    },
+    {
+	"Name": "Soundboard",
+	"Program": "python3",
+	"Path": "soundboard/soundboard.py",
+	"Static": "soundboard/"
     }
 ]

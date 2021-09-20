@@ -1,10 +1,16 @@
 # Server related ignores
-server/node_modules
-server/package-lock.json
 .obsidian
 rpi/server/node_modules
 rpi/server/.vscode
+rpi/server/node_modules
 
 # Python repl
-server/programs/python-repl/.interp.py
-server/programs/python-repl/__pycache__
+rpi/server/programs/python-repl/.interp.py
+rpi/server/programs/python-repl/__pycache__
+
+# Ignoring cached stuff
+*/__pycache__
+*.pyc
+
+
+.log

@@ -9,9 +9,18 @@ from time import sleep
 import toster
 import serial
 
+# Changes serial behaviour
+# see: https://linux.die.net/man/3/termios
+def modifyFD(fd):
+    oldAttr = termios.tcgetattr(fd)
+    oldAttr[2] = oldAttr[2] & ~termios.HUPCL
+    termios.tcsetattr(fd, termios.TCSANOW, oldAttr)
+
+
 def reqHandler(req):
     tbs = ""
     msg = req["msg"]
+    serialPort = msg["port"]
     if "angle" in msg:
         angle = msg["angle"]
         if angle["right"]:
@@ -27,11 +36,9 @@ def reqHandler(req):
         else:
             tbs += "B"
         tbs += str(vel["power"])
-    ser = serial.Serial("/dev/ttyUSB0", timeout=0)
-    fd = ser.fileno()
-    oldAttr = termios.tcgetattr(fd)
-    oldAttr[2] = oldAttr[2] & ~termios.HUPCL
-    termios.tcsetattr(fd, termios.TCSANOW, oldAttr)
+    tbs += " "
+    ser = serial.Serial(serialPort, timeout=0)
+    modifyFD(ser.fileno())
     ser.baudrate = 9600
     ser.nonblocking()
     ser.write(bytes(tbs, "UTF-8"))

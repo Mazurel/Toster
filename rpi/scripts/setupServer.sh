@@ -10,7 +10,7 @@ cp -rf ./* /usr/share/toster/
 cd /usr/share/toster/server
 
 echo Setting up server ...
-npm install || echo Failed installing node modules && exit -1
+npm install || echo Failed installing node modules
 
 cat > /etc/systemd/system/toster.service << EOF
 [Unit]
