@@ -26,7 +26,7 @@ def onRequest(req):
         soundTrackPath = path.join(TRACKS_PATH, soundTrack)
 
         # Play sound via omxplayer
-        os.system(f"omxplayer --no-keys {soundTrackPath}")
+        os.system(f"omxplayer --no-keys \"{soundTrackPath}\"")
 
         toster.sendResponse(req, { "ok": True })
     elif "list" in msg and msg["list"]:
