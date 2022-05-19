@@ -17,7 +17,7 @@ int L = 0;
 int R = 0;
 int X = 0;
 int Y = 0;
-
+boolean digiValuesPrev[17];
 //struktura ramki przysłanej z kontrolera
 typedef struct message {
    uint16_t analValues[4];
@@ -141,12 +141,102 @@ void setMidPos () {
   Yavg = Yavg/10;
 }
 
+void buttons() {
+
+if (myMessage.digiValues[0] == 1 && digiValuesPrev[0] == 0) {
+    //todo
+}
+digiValuesPrev[0] = myMessage.digiValues[0];
+
+if (myMessage.digiValues[1] == 1 && digiValuesPrev[1] == 0) {
+  setMidPos();
+}
+digiValuesPrev[1] = myMessage.digiValues[1];
+
+if (myMessage.digiValues[2] == 1 && digiValuesPrev[2] == 0) {
+    //todo
+}
+digiValuesPrev[2] = myMessage.digiValues[2];
+
+if (myMessage.digiValues[3] == 1 && digiValuesPrev[3] == 0) {
+    //todo
+}
+digiValuesPrev[3] = myMessage.digiValues[3];
+
+if (myMessage.digiValues[4] == 1 && digiValuesPrev[4] == 0) {
+    //todo
+}
+digiValuesPrev[4] = myMessage.digiValues[4];
+
+if (myMessage.digiValues[5] == 1 && digiValuesPrev[5] == 0) {
+    //todo
+}
+digiValuesPrev[5] = myMessage.digiValues[5];
+
+if (myMessage.digiValues[6] == 1 && digiValuesPrev[6] == 0) {
+    //todo
+}
+digiValuesPrev[6] = myMessage.digiValues[6];
+
+if (myMessage.digiValues[7] == 1 && digiValuesPrev[7] == 0) {
+    //todo
+}
+digiValuesPrev[7] = myMessage.digiValues[7];
+
+if (myMessage.digiValues[8] == 1 && digiValuesPrev[8] == 0) {
+    //todo
+}
+digiValuesPrev[8] = myMessage.digiValues[8];
+
+if (myMessage.digiValues[9] == 1 && digiValuesPrev[9] == 0) {
+    //todo
+}
+digiValuesPrev[9] = myMessage.digiValues[9];
+
+if (myMessage.digiValues[10] == 1 && digiValuesPrev[10] == 0) {
+    //todo
+}
+digiValuesPrev[10] = myMessage.digiValues[10];
+
+if (myMessage.digiValues[11] == 1 && digiValuesPrev[11] == 0) {
+    //todo
+}
+digiValuesPrev[11] = myMessage.digiValues[11];
+
+if (myMessage.digiValues[12] == 1 && digiValuesPrev[12] == 0) {
+    //todo
+}
+digiValuesPrev[12] = myMessage.digiValues[12];
+
+if (myMessage.digiValues[13] == 1 && digiValuesPrev[13] == 0) {
+    //todo
+}
+digiValuesPrev[13] = myMessage.digiValues[13];
+
+if (myMessage.digiValues[14] == 1 && digiValuesPrev[14] == 0) {
+    //todo
+}
+digiValuesPrev[14] = myMessage.digiValues[14];
+
+if (myMessage.digiValues[15] == 1 && digiValuesPrev[15] == 0) {
+    //todo
+}
+digiValuesPrev[15] = myMessage.digiValues[15];
+
+if (myMessage.digiValues[16] == 1 && digiValuesPrev[16] == 0) {
+    //todo
+}
+digiValuesPrev[16] = myMessage.digiValues[16];
+}
+
 //główna funkcja ruchu
 void move () {
 
+  //równania ruchu lewej i prawej gąsienicy
   R = Y + X;
   L = Y - X;
 
+  //sterowanie lewą (B1 B2) i prawą (A1 A2) gąsienicą
   if (R > 0) {
     ledcWrite(PinA1, R);
     ledcWrite(PinA2, 0);
@@ -174,10 +264,7 @@ if (recFlag == 1 && firstTimeSetup == 1) {
   firstTimeSetup = 0;
 }
 
-//kalibracja drążków przypisana do przycisku 1
-if (myMessage.digiValues[1] == 1) {
-  setMidPos();
-}
+buttons();
 
 //dziejąca się za każdym otrzymaniem ramki, update pwm na silniki
 if (recFlag == 1) {
