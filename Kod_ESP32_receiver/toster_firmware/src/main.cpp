@@ -17,6 +17,7 @@ int L = 0;
 int R = 0;
 int X = 0;
 int Y = 0;
+
 boolean digiValuesPrev[17];
 //struktura ramki przysłanej z kontrolera
 typedef struct message {
@@ -272,7 +273,10 @@ if (recFlag == 1) {
   X = map11to10bit(Xavg, myMessage.analValues[0]);
   Y = map11to10bit(Yavg, myMessage.analValues[2]);
 
-  move();
+  //deadzone
+  if (abs(X) > Xavg/20 || abs(Y) > Yavg/20) {
+      move();
+  }
 
   recFlag = 0;
 }
