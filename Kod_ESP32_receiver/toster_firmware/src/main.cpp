@@ -18,6 +18,8 @@ int R = 0;
 int X = 0;
 int Y = 0;
 
+int startTimeout = 0;
+boolean timedOut = 0;
 boolean digiValuesPrev[17];
 //struktura ramki przysłanej z kontrolera
 typedef struct message {
@@ -50,10 +52,10 @@ void setup() {
   ledcSetup(PinB2, 20000, 10);
 
   //dodanie pinów fizycznych do kanałów PWM
-  ledcAttachPin(4, 0);
-  ledcAttachPin(2, 2);
-  ledcAttachPin(15, 3); 
-  ledcAttachPin(13, 4); 
+  ledcAttachPin(12, PinB1);
+  ledcAttachPin(14, PinB2);
+  ledcAttachPin(27, PinA2); 
+  ledcAttachPin(26, PinA1); 
 
   //pwm startowe = 0
   ledcWrite(PinA1, 0);
@@ -69,10 +71,10 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFi.setSleep(false); 
 
-  // Get Mac Add
-  // Serial.print("Mac Address: ");
-  // Serial.print(WiFi.macAddress());
-  // Serial.println("\nESP-Now Receiver");
+  //Get Mac Add
+  Serial.print("Mac Address: ");
+  Serial.print(WiFi.macAddress());
+  Serial.println("\nESP-Now Receiver");
   
   //rejestracja ESP-NOW
   esp_now_init();
@@ -270,15 +272,35 @@ buttons();
 //dziejąca się za każdym otrzymaniem ramki, update pwm na silniki
 if (recFlag == 1) {
 
+  timedOut = 0;
+  startTimeout = 0;
+
   X = map11to10bit(Xavg, myMessage.analValues[0]);
   Y = map11to10bit(Yavg, myMessage.analValues[2]);
 
-  //deadzone
-  if (abs(X) > Xavg/20 || abs(Y) > Yavg/20) {
-      move();
-  }
+  //deadzone DO NAPRAWY, X jest 10 bit a Xavg 11
+  // if (abs(X) > Xavg/20 || abs(Y) > Yavg/20) {
+  //     move();
+  // } else {
+  //   X = Xavg;
+  //   Y = Yavg;
+  //   move();
+  // }
+
+  move();
 
   recFlag = 0;
+
+} else {
+  
+  if (startTimeout == 0) {
+    startTimeout = millis();
+  }
+
+  if (millis() - startTimeout > 10000) {
+    //przejście na autonomiczne
+  }
+
 }
 
 delay(1);
