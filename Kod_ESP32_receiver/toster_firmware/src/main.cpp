@@ -17,6 +17,11 @@ int L = 0;
 int R = 0;
 int X = 0;
 int Y = 0;
+int deadZoneHigh = 300;
+int deadZoneLow = 200;
+bool hysterysisX = 0;
+bool hysterysisY = 0;
+int gear = 1;
 
 int startTimeout = 0;
 boolean timedOut = 0;
@@ -46,10 +51,10 @@ void setup() {
   pinMode(13, OUTPUT);
   
   //konfiguracja kanałów PWM
-  ledcSetup(PinA1, 20000, 10);
-  ledcSetup(PinA2, 20000, 10);
-  ledcSetup(PinB1, 20000, 10);
-  ledcSetup(PinB2, 20000, 10);
+  ledcSetup(PinA1, 20000, 11);
+  ledcSetup(PinA2, 20000, 11);
+  ledcSetup(PinB1, 20000, 11);
+  ledcSetup(PinB2, 20000, 11);
 
   //dodanie pinów fizycznych do kanałów PWM
   ledcAttachPin(12, PinB1);
@@ -96,6 +101,31 @@ int map11to10bit (int average, int input) {
 
 }
 
+void deadZone () {
+    
+  if (abs(X) > deadZoneHigh) {
+    hysterysisX = false;
+  } else if (abs(X) < deadZoneLow) {
+    hysterysisX = true;
+  } 
+
+  if (hysterysisX) {
+    X = 0;
+  }
+
+
+  if (abs(Y) > deadZoneHigh) {
+    hysterysisY = false;
+  } else if (abs(Y) < deadZoneLow) {
+    hysterysisY = true;
+  } 
+
+  if (hysterysisY) {
+    Y = 0;
+  }
+
+}
+
 //debug wartości analogowych
 void debugValues () {
   if (recFlag == 1) {
@@ -121,6 +151,27 @@ Serial.print("  ");
 Serial.println(map11to10bit(Yavg, myMessage.analValues[2]));
 }
 
+void debugDigi() {
+  for (int i = 0; i < 17; i++) {
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.print(myMessage.digiValues[i]);
+    Serial.print("  ");
+  }
+  Serial.println("");
+}
+
+void debugXY () {
+  Serial.print("X: ");
+  Serial.print(X);
+  Serial.print("    Y: ");
+  Serial.print(Y);
+  Serial.print("R: ");
+  Serial.print(R);
+  Serial.print("    L: ");
+  Serial.println(L);
+}
+
 //funkcja kalibrująca wartości Xavg i Yavg do uśrednionej wartości aktualnego położenia drążków
 void setMidPos () {
 
@@ -131,7 +182,7 @@ void setMidPos () {
 
   for (int i = 0; i < 10; i++) {
 
-    while ((millis() - time1) < 10) {
+    while ((millis() - time1) < 100) {
     }
 
     time1 = millis();
@@ -217,7 +268,10 @@ if (myMessage.digiValues[13] == 1 && digiValuesPrev[13] == 0) {
 digiValuesPrev[13] = myMessage.digiValues[13];
 
 if (myMessage.digiValues[14] == 1 && digiValuesPrev[14] == 0) {
-    //todo
+    //gear down
+    if (gear < 4) {
+      gear = gear + 1;
+    }
 }
 digiValuesPrev[14] = myMessage.digiValues[14];
 
@@ -227,7 +281,10 @@ if (myMessage.digiValues[15] == 1 && digiValuesPrev[15] == 0) {
 digiValuesPrev[15] = myMessage.digiValues[15];
 
 if (myMessage.digiValues[16] == 1 && digiValuesPrev[16] == 0) {
-    //todo
+    //gear up
+    if (gear > 1) {
+      gear = gear - 1;
+    }
 }
 digiValuesPrev[16] = myMessage.digiValues[16];
 }
@@ -241,19 +298,19 @@ void move () {
 
   //sterowanie lewą (B1 B2) i prawą (A1 A2) gąsienicą
   if (R > 0) {
-    ledcWrite(PinA1, R);
+    ledcWrite(PinA1, R/gear);
     ledcWrite(PinA2, 0);
   } else {
     ledcWrite(PinA1, 0);
-    ledcWrite(PinA2, -1*R);
+    ledcWrite(PinA2, -1*R/gear);
   }
 
     if (L > 0) {
-    ledcWrite(PinB1, L);
+    ledcWrite(PinB1, L/gear);
     ledcWrite(PinB2, 0);
   } else {
     ledcWrite(PinB1, 0);
-    ledcWrite(PinB2, -1*L);
+    ledcWrite(PinB2, -1*L/gear);
   }
 
 }
@@ -278,15 +335,11 @@ if (recFlag == 1) {
   X = map11to10bit(Xavg, myMessage.analValues[0]);
   Y = map11to10bit(Yavg, myMessage.analValues[2]);
 
-  //deadzone DO NAPRAWY, X jest 10 bit a Xavg 11
-  // if (abs(X) > Xavg/20 || abs(Y) > Yavg/20) {
-  //     move();
-  // } else {
-  //   X = Xavg;
-  //   Y = Yavg;
-  //   move();
-  // }
+  //deadzone
+  deadZone();
 
+  // debugXY();
+  // debugDigi();
   move();
 
   recFlag = 0;
@@ -302,6 +355,8 @@ if (recFlag == 1) {
   }
 
 }
+
+//miejsce na funkcje autonomiczną (rpi)
 
 delay(1);
 }
